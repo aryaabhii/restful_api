@@ -1,27 +1,16 @@
 const express = require("express");
-const app  = express();
+const app = express();
 const port = process.env.PORT || 8080;
-app.use(express.json()); // middleware
+app.use(express.json()); // middleware for data
 
 require("./database/connection");
-const Student = require("./models/user");
 
-// client will request
-// server give response on the basis of client
-app.get("/", (req, res) => {
-    res.send("Hello Home");
-});
+// routers
+const studentRouter = require("./routers/student")
+app.use(studentRouter);
 
-app.post("/student", (req, res) => {
-    const user = Student(req.body);
-    console.log(req.body);
-    user.save().then( () => {
-        res.send(user);
-    }).catch( (error) => {
-        res.send(error);
-    });
-});
 
+// server
 app.listen(port, () => {
     console.log(`Server started at ${port}`);
 });

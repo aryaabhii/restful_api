@@ -3,35 +3,34 @@ const validator = require("validator");
 
 
 // user schema
-const userSchema = new  mongoose.Schema({
-    name : {
+const userSchema = new mongoose.Schema({
+    name: {
         type: String,
         required: true,
         minlength: 3,
     },
-    email : {
+    email: {
         type: String,
         required: true,
-        unique: [true, "Email already regusted."],
+        unique: [true, "Email already reused."],
         validate(value) {
-            if(!validator.isEmail(value)) {
-                throw new Error("Envalid email..!")
+            if (!validator.isEmail(value)) {
+                throw new Error("Invalid email..!")
             }
         }
     },
-    phone : {
+    phone: {
         type: Number,
         min: 10,
-        max: 10,
         required: true,
         unique: true
     },
-    address : {
+    address: {
         type: String,
         required: true,
     }
 });
 
 // new collection...
-const User = new mongoose.model("user", userSchema);
+const User = new mongoose.model("User", userSchema);
 module.exports = User;
